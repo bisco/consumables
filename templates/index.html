@@ -1,0 +1,26 @@
+{{template "header" .}}
+
+<h1>Consumables</h1>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Count</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range $idx, $item := .allItems}}
+        <tr>
+          <td>{{$item.Id}}</td>
+          <td>{{$item.Name}}</td>
+          <td>{{$item.Count}}</td>
+          <td>{{$item.UpdatedAt}}</td>
+        </tr>
+        {{end}}        
+    </tbody>
+</table>
+
+{{template "footer"}}
