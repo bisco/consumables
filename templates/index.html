@@ -8,6 +8,7 @@
             <th>#</th>
             <th>Name</th>
             <th>Count</th>
+            <th>Action</th>
             <th>Updated</th>
         </tr>
     </thead>
@@ -16,7 +17,11 @@
         <tr>
           <td>{{$item.Id}}</td>
           <td>{{$item.Name}}</td>
-          <td>{{$item.Count}}</td>
+          <td><div id="itemid-{{$item.Id}}">{{$item.Count}}</div></td>
+          <td>
+              <input type="button" id="{{$item.Id}}" value="+" onclick="plusOne(this.id)">
+              <input type="button" id="{{$item.Id}}" value="-" onclick="minusOne(this.id)">
+          </td>
           <td>{{$item.UpdatedAt}}</td>
         </tr>
         {{end}}        

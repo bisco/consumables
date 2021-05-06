@@ -1,14 +1,21 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+type TargetId struct {
+	Id uint32 `json:"id"`
+}
+
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*.html")
+	r.Static("/assets", "./assets")
 
 	// gen html
 	r.GET("/", genIndexView())
@@ -21,6 +28,8 @@ func setupRouter() *gin.Engine {
 	r.GET(V1_API_PREFIX+"/consumable-items/:id", getItemById())
 	r.PATCH(V1_API_PREFIX+"/consumable-items/:id", modifyItem())
 	r.POST(V1_API_PREFIX+"/consumable-items", createItem())
+	r.POST(V1_API_PREFIX+"/consumable-items/actions/plus-one/invoke", countPlusOne())
+	r.POST(V1_API_PREFIX+"/consumable-items/actions/minus-one/invoke", countMinusOne())
 	r.DELETE(V1_API_PREFIX+"/consumable-items/:id", deleteItem())
 
 	return r
@@ -50,5 +59,36 @@ func createItem() gin.HandlerFunc {
 
 func deleteItem() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+	}
+}
+
+func countPlusOne() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var body TargetId
+		if err := ctx.ShouldBindJSON(&body); err != nil {
+			log.Fatalf("bind fail: %v", err)
+		}
+		c := dbGetById(body.Id)
+		fmt.Println(c)
+		c.Count += 1
+		dbUpdate(c.Id, c.Name, c.Count)
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
+	}
+}
+
+func countMinusOne() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var body TargetId
+		if err := ctx.ShouldBindJSON(&body); err != nil {
+			log.Fatalf("bind fail: %v", err)
+		}
+		c := dbGetById(body.Id)
+		fmt.Println(c)
+		if c.Count == 0 {
+			ctx.JSON(http.StatusOK, gin.H{"status": "fail"})
+		}
+		c.Count -= 1
+		dbUpdate(c.Id, c.Name, c.Count)
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }

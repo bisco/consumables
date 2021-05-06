@@ -46,7 +46,7 @@ func dbInsert(name string, count uint32) {
 
 func dbUpdate(id uint32, name string, count uint32) {
 	db := dbOpen()
-
+	fmt.Println("dbUpdate:", id, name, count)
 	var c Consumable
 	db.First(&c, id)
 	c.Name = name
@@ -67,6 +67,14 @@ func dbGetAll() []Consumable {
 	var cs []Consumable
 	db.Order("updated_at asc").Find(&cs)
 	return cs
+}
+
+func dbGetById(id uint32) Consumable {
+	db := dbOpen()
+
+	var c Consumable
+	db.First(&c, id)
+	return c
 }
 
 //-----------------------------------
