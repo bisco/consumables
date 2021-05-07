@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -69,6 +70,12 @@ func createItem() gin.HandlerFunc {
 
 func deleteItem() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		id, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+		if err != nil {
+			log.Fatalf("fail parseUint: %v", err)
+		}
+		dbDelete(uint32(id))
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }
 

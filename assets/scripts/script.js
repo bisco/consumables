@@ -11,6 +11,17 @@ async function POST(url, body) {
     }
 }
 
+async function DELETE(url) {
+    try {
+        const response = await fetch(url, {
+            method: "DELETE",
+        });
+        return await response.json();
+    } catch(error) {
+        return {error: error.message || "Unknown error"};
+    }
+}
+
 async function plusOne(id) {
     const countTag = document.querySelector("#itemid-"+id);
     const curCount = parseInt(countTag.textContent, 10);
@@ -18,7 +29,7 @@ async function plusOne(id) {
 
     response = await POST("//192.168.0.142:12000/api/v1/consumable-items/actions/plus-one/invoke", JSON.stringify(reqbody));
     countTag.textContent = (curCount + 1).toString()
-    console.log(response)
+    //console.log(response)
 }
 
 async function minusOne(id) {
@@ -31,7 +42,21 @@ async function minusOne(id) {
     }
     response = await POST("//192.168.0.142:12000/api/v1/consumable-items/actions/minus-one/invoke", JSON.stringify(reqbody));
     countTag.textContent = (curCount - 1).toString()
-    console.log(response)
+    //console.log(response)
+}
+
+async function deleteOne(id) {
+    response = await DELETE("/api/v1/consumable-items/"+id);
+    if(response.status !== "ok") {
+        return;
+    }
+    const row = document.querySelector("#row-itemid"+id);
+    const name = document.querySelector("#itemid"+id+"-name").textContent;
+    const resultArea = document.querySelector("#actionResult");
+    row.remove();
+    resultArea.textContent = "Remove successfully: " + name;
+    //console.log(response)
+
 }
 
 async function addItem() {

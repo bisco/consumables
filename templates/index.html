@@ -4,6 +4,7 @@
 <hr>
 <a href="./add">add entry</a>
 <hr>
+<div id="actionResult"></div>
 <table>
     <thead>
         <tr>
@@ -16,13 +17,14 @@
     </thead>
     <tbody>
         {{range $idx, $item := .allItems}}
-        <tr>
+        <tr id="row-itemid{{$item.Id}}">
           <td>{{$item.Id}}</td>
-          <td>{{$item.Name}}</td>
+          <td><div id="itemid{{$item.Id}}-name">{{$item.Name}}</div></td>
           <td><div id="itemid-{{$item.Id}}">{{$item.Count}}</div></td>
           <td>
               <input type="button" id="{{$item.Id}}" value="+" onclick="plusOne(this.id)">
               <input type="button" id="{{$item.Id}}" value="-" onclick="minusOne(this.id)">
+              <input type="button" id="{{$item.Id}}" value="D" onclick="deleteOne(this.id)">
           </td>
           <td>{{$item.UpdatedAt}}</td>
         </tr>

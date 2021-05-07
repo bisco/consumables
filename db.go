@@ -59,7 +59,8 @@ func dbDelete(id uint32) {
 	db := dbOpen()
 
 	var c Consumable
-	db.Delete(&c, id)
+	result := db.Delete(&c, id)
+	fmt.Println(c, result)
 }
 
 func dbGetAll() []Consumable {
