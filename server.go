@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -10,6 +9,11 @@ import (
 
 type TargetId struct {
 	Id uint32 `json:"id"`
+}
+
+type CreateReq struct {
+	Name  string `json:"name"`
+	Count uint32 `json:"count"`
 }
 
 func setupRouter() *gin.Engine {
@@ -54,6 +58,12 @@ func modifyItem() gin.HandlerFunc {
 
 func createItem() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		var reqbody CreateReq
+		if err := ctx.ShouldBindJSON(&reqbody); err != nil {
+			log.Fatalf("bind fail: %v", err)
+		}
+		dbInsert(reqbody.Name, reqbody.Count)
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }
 
@@ -69,7 +79,6 @@ func countPlusOne() gin.HandlerFunc {
 			log.Fatalf("bind fail: %v", err)
 		}
 		c := dbGetById(body.Id)
-		fmt.Println(c)
 		c.Count += 1
 		dbUpdate(c.Id, c.Name, c.Count)
 		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
@@ -83,7 +92,6 @@ func countMinusOne() gin.HandlerFunc {
 			log.Fatalf("bind fail: %v", err)
 		}
 		c := dbGetById(body.Id)
-		fmt.Println(c)
 		if c.Count == 0 {
 			ctx.JSON(http.StatusOK, gin.H{"status": "fail"})
 		}

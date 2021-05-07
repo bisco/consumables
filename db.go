@@ -41,7 +41,8 @@ func dbInit() {
 
 func dbInsert(name string, count uint32) {
 	db := dbOpen()
-	db.Create(&Consumable{Name: name, Count: count})
+	result := db.Create(&Consumable{Name: name, Count: count})
+	fmt.Println(result)
 }
 
 func dbUpdate(id uint32, name string, count uint32) {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +10,6 @@ import (
 func genIndexView() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		allItems := dbGetAll()
-		fmt.Println(allItems)
 		ctx.HTML(http.StatusOK, "index.html",
 			gin.H{"allItems": allItems})
 	}
@@ -20,7 +18,8 @@ func genIndexView() gin.HandlerFunc {
 // PATH: /add
 func genAddView() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		ctx.HTML(http.StatusOK, "add.html",
+			gin.H{})
 	}
 }
 

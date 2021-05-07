@@ -1,0 +1,20 @@
+{{template "header" .}}
+
+<h1>Consumables/add</h1>
+<hr>
+<a href="/">home</a>
+<hr>
+
+<div>
+    <form action="javascript:addItem()">
+        <label for="name">name</label>
+        <input id="name" type="text" value="name"></p>
+        <label for="count">count</label>
+        <input id="count" type="number" value="count"  min="0" step="1">
+        <div id="invalidCount"></div>
+        <button>add</button>
+    </form>
+    <div id="addResult"></div>
+</div>
+
+{{template "footer"}}

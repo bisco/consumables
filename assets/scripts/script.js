@@ -33,3 +33,26 @@ async function minusOne(id) {
     countTag.textContent = (curCount - 1).toString()
     console.log(response)
 }
+
+async function addItem() {
+    const name = document.querySelector("#name").value;
+    const count = document.querySelector("#count").value;
+
+    if(name === "" || count === "") {
+        console.log("invalid input");
+        console.log("name:", name);
+        console.log("count:", count);
+        return
+    }
+
+    const reqbody = {"name":name, "count":parseInt(count, 10)}
+    const result = document.querySelector("#addResult")
+
+    console.log(reqbody)
+    response = await POST("/api/v1/consumable-items", JSON.stringify(reqbody));
+
+    if(response.status === "ok") {
+        result.textContent = "successfully added => " + name + " @ " + count
+    }
+
+}
