@@ -1,3 +1,6 @@
+//------------------------
+// HTTP Method
+//------------------------
 async function POST(url, body) {
     try {
         const response = await fetch(url, {
@@ -22,8 +25,11 @@ async function DELETE(url) {
     }
 }
 
+//------------------------
+// Functions for buttons at "/"
+//------------------------
 async function plusOne(id) {
-    const countTag = document.querySelector("#itemid-"+id);
+    const countTag = document.querySelector("#itemid"+id+"-count");
     const curCount = parseInt(countTag.textContent, 10);
     const reqbody = {"id": parseInt(id, 10)}
 
@@ -33,7 +39,7 @@ async function plusOne(id) {
 }
 
 async function minusOne(id) {
-    const countTag = document.querySelector("#itemid-"+id);
+    const countTag = document.querySelector("#itemid"+id+"-count");
     const curCount = parseInt(countTag.textContent, 10);
     const reqbody = {"id": parseInt(id, 10)}
 
@@ -59,6 +65,9 @@ async function deleteOne(id) {
 
 }
 
+//------------------------
+// add entry at "/add"
+//------------------------
 async function addItem() {
     const name = document.querySelector("#name").value;
     const count = document.querySelector("#count").value;
@@ -81,3 +90,23 @@ async function addItem() {
     }
 
 }
+
+//------------------------
+// do only at "/"
+//------------------------
+function convertTZ() {
+    let currentPath = location.pathname;
+    if(currentPath !== "/") {
+
+    }
+    document.querySelectorAll(".updated-at").forEach((tag) => {
+        ts = parseInt(tag.textContent, 10);
+        d = new Date(ts);
+       tag.textContent = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+    });
+}
+
+//------------------------
+// page initialization
+//------------------------
+convertTZ();

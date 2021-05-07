@@ -20,13 +20,13 @@
         <tr id="row-itemid{{$item.Id}}">
           <td>{{$item.Id}}</td>
           <td><div id="itemid{{$item.Id}}-name">{{$item.Name}}</div></td>
-          <td><div id="itemid-{{$item.Id}}">{{$item.Count}}</div></td>
+          <td><div id="itemid{{$item.Id}}-count">{{$item.Count}}</div></td>
           <td>
               <input type="button" id="{{$item.Id}}" value="+" onclick="plusOne(this.id)">
               <input type="button" id="{{$item.Id}}" value="-" onclick="minusOne(this.id)">
               <input type="button" id="{{$item.Id}}" value="D" onclick="deleteOne(this.id)">
           </td>
-          <td>{{$item.UpdatedAt}}</td>
+          <td><div class="updated-at" id="itemid{{$item.Id}}-updatetime">{{$item.UpdatedAt}}</div></td>
         </tr>
         {{end}}        
     </tbody>
