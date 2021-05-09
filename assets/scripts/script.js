@@ -71,16 +71,14 @@ async function deleteOne(id) {
 async function addItem() {
     const name = document.querySelector("#name").value;
     const count = document.querySelector("#count").value;
+    const result = document.querySelector("#addResult")
 
     if(name === "" || count === "") {
-        console.log("invalid input");
-        console.log("name:", name);
-        console.log("count:", count);
-        return
+        result.textContent = "add fail: name or count is blank";
+        return;
     }
 
-    const reqbody = {"name":name, "count":parseInt(count, 10)}
-    const result = document.querySelector("#addResult")
+    const reqbody = {"name":name, "count":parseInt(count, 10)};
 
     console.log(reqbody)
     response = await POST("/api/v1/consumable-items", JSON.stringify(reqbody));
