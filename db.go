@@ -67,7 +67,7 @@ func dbGetAll() []Consumable {
 	db := dbOpen()
 
 	var cs []Consumable
-	db.Order("updated_at asc").Find(&cs)
+	db.Order("count asc").Find(&cs)
 	return cs
 }
 
