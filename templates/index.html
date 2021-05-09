@@ -8,25 +8,23 @@
 <table>
     <thead>
         <tr>
-            <th>#</th>
             <th>Name</th>
             <th>Count</th>
-            <th>Action</th>
             <th>Updated</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         {{range $idx, $item := .allItems}}
         <tr id="row-itemid{{$item.Id}}">
-          <td>{{$item.Id}}</td>
           <td><div id="itemid{{$item.Id}}-name">{{$item.Name}}</div></td>
           <td><div id="itemid{{$item.Id}}-count">{{$item.Count}}</div></td>
+          <td><div class="updated-at" id="itemid{{$item.Id}}-updatetime">{{$item.UpdatedAt}}</div></td>
           <td>
               <input type="button" id="{{$item.Id}}" value="+" onclick="plusOne(this.id)">
               <input type="button" id="{{$item.Id}}" value="-" onclick="minusOne(this.id)">
               <input type="button" id="{{$item.Id}}" value="D" onclick="deleteOne(this.id)">
           </td>
-          <td><div class="updated-at" id="itemid{{$item.Id}}-updatetime">{{$item.UpdatedAt}}</div></td>
         </tr>
         {{end}}        
     </tbody>
