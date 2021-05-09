@@ -33,7 +33,7 @@ async function plusOne(id) {
     const curCount = parseInt(countTag.textContent, 10);
     const reqbody = {"id": parseInt(id, 10)}
 
-    response = await POST("//192.168.0.142:12000/api/v1/consumable-items/actions/plus-one/invoke", JSON.stringify(reqbody));
+    response = await POST("/api/v1/consumable-items/actions/plus-one/invoke", JSON.stringify(reqbody));
     countTag.textContent = (curCount + 1).toString()
     //console.log(response)
 }
@@ -46,7 +46,7 @@ async function minusOne(id) {
     if(curCount == 0) {
         return
     }
-    response = await POST("//192.168.0.142:12000/api/v1/consumable-items/actions/minus-one/invoke", JSON.stringify(reqbody));
+    response = await POST("/api/v1/consumable-items/actions/minus-one/invoke", JSON.stringify(reqbody));
     countTag.textContent = (curCount - 1).toString()
     //console.log(response)
 }
