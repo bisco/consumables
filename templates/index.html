@@ -1,4 +1,5 @@
 {{template "header" .}}
+<div class="container">
 
 <h1>Consumables</h1>
 <hr>
@@ -8,17 +9,21 @@
 {{range $idx, $item := .allItems}}
 <div class="row item-container" id="row-itemid{{$item.Id}}">
         <div class="column">
+            <div class="">
             <span id="itemid{{$item.Id}}-name">{{$item.Name}}</span>:
             <span id="itemid{{$item.Id}}-count">{{$item.Count}}</span>
         </div>
-        <div class="column">
-            <a href="#" class="button button-outline" id="{{$item.Id}}" onclick="plusOne(this.id)">+1</a>
-            <a href="#" class="button button-outline" id="{{$item.Id}}" onclick="minusOne(this.id)">-1</a>
-            <a href="#" class="button button-outline" id="{{$item.Id}}" onclick="deleteOne(this.id)">D</a>
         </div>
         <div class="column">
+            <button class="button button-outline" id="{{$item.Id}}" onclick="plusOne(this.id)">+1</button>
+            <button class="button button-outline" id="{{$item.Id}}" onclick="minusOne(this.id)">-1</button>
+            <button class="button button-outline" id="{{$item.Id}}" onclick="deleteOne(this.id)">D</button>
+        </div>
+        <div class="column align-right">
             <small>updated: <span class="updated-at">{{$item.UpdatedAt}}</span></small>
         </div>
 </div>
+
 {{end}}
+</div> <!-- class="container" -->
 {{template "footer"}}

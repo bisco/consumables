@@ -1,8 +1,10 @@
-@charset utf-8;
-
-div.item-container {
+.item-container {
     border: 0.1rem solid #f4f5f6;
-    border-radius: 10px;
+    border-radius: 0px;
     margin: 5px;
     padding: 5px;
+}
+
+.align-right {
+    text-align: right;
 }
