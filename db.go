@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"gorm.io/driver/sqlite"
@@ -10,11 +9,13 @@ import (
 )
 
 type Consumable struct {
-	Id        uint32    `gorm:"primaryKey" json:"id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Name      string    `json:"name"`
-	Count     uint32    `json:"count"`
+	Id          uint32    `gorm:"primaryKey" json:"id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	Name        string    `json:"name"`
+	Count       uint32    `json:"count"`
+	Category    string    `json:"category"`
+	SubCategory string    `json:"subcategory"`
 }
 
 const DB_PATH = "./consumables.db"
@@ -39,15 +40,27 @@ func dbInit() {
 	db.AutoMigrate(&Consumable{})
 }
 
-func dbInsert(name string, count uint32) {
+func dbInsert(name string, count uint32, category, subcategory string) {
 	db := dbOpen()
-	result := db.Create(&Consumable{Name: name, Count: count})
+	result := db.Create(&Consumable{Name: name, Count: count, Category: category, SubCategory: subcategory})
 	fmt.Println(result)
 }
 
-func dbUpdate(id uint32, name string, count uint32) {
+func dbUpdate(id uint32, name string, count uint32, category, subcategory string) {
 	db := dbOpen()
-	fmt.Println("dbUpdate:", id, name, count)
+	fmt.Println("dbUpdate:", id, name, count, category, subcategory)
+	var c Consumable
+	db.First(&c, id)
+	c.Name = name
+	c.Count = count
+	c.Category = category
+	c.SubCategory = subcategory
+	db.Save(&c)
+}
+
+func dbModifyCount(id uint32, name string, count uint32) {
+	db := dbOpen()
+	fmt.Println("dbModifyCount:", id, name, count)
 	var c Consumable
 	db.First(&c, id)
 	c.Name = name
@@ -77,13 +90,4 @@ func dbGetById(id uint32) Consumable {
 	var c Consumable
 	db.First(&c, id)
 	return c
-}
-
-//-----------------------------------
-// test purpose only
-//-----------------------------------
-func dbDataGen() {
-	for i := 0; i < 10; i++ {
-		dbInsert("test"+strconv.Itoa(i), uint32(i))
-	}
 }

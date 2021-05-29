@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"strconv"
 )
@@ -13,7 +14,8 @@ func main() {
 
 	dbInit()
 	if *testFlag {
-		dbDataGen()
+		fmt.Println("there is no test mode...")
+		return
 	}
 
 	r := setupRouter()

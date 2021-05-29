@@ -13,8 +13,10 @@ type TargetId struct {
 }
 
 type CreateReq struct {
-	Name  string `json:"name"`
-	Count uint32 `json:"count"`
+	Name        string `json:"name"`
+	Count       uint32 `json:"count"`
+	Category    string `json:"category"`
+	SubCategory string `json:"subcategory"`
 }
 
 func setupRouter() *gin.Engine {
@@ -54,6 +56,17 @@ func getItemById() gin.HandlerFunc {
 
 func modifyItem() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		var reqbody CreateReq
+		if err := ctx.ShouldBindJSON(&reqbody); err != nil {
+			log.Fatalf("bind fail: %v", err)
+		}
+		id, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+		if err != nil {
+			log.Fatalf("fail parseUint: %v", err)
+		}
+		dbUpdate(uint32(id), reqbody.Name, reqbody.Count, reqbody.Category, reqbody.SubCategory)
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
+
 	}
 }
 
@@ -63,7 +76,7 @@ func createItem() gin.HandlerFunc {
 		if err := ctx.ShouldBindJSON(&reqbody); err != nil {
 			log.Fatalf("bind fail: %v", err)
 		}
-		dbInsert(reqbody.Name, reqbody.Count)
+		dbInsert(reqbody.Name, reqbody.Count, reqbody.Category, reqbody.SubCategory)
 		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }
@@ -87,7 +100,7 @@ func countPlusOne() gin.HandlerFunc {
 		}
 		c := dbGetById(body.Id)
 		c.Count += 1
-		dbUpdate(c.Id, c.Name, c.Count)
+		dbModifyCount(c.Id, c.Name, c.Count)
 		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }
@@ -103,7 +116,7 @@ func countMinusOne() gin.HandlerFunc {
 			ctx.JSON(http.StatusOK, gin.H{"status": "fail"})
 		}
 		c.Count -= 1
-		dbUpdate(c.Id, c.Name, c.Count)
+		dbModifyCount(c.Id, c.Name, c.Count)
 		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	}
 }

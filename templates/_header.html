@@ -5,16 +5,39 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <!-- CSS Reset -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-    <!-- Milligram CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla-framework-version-2.29.0.min.css" />
     <link rel="stylesheet" href="/assets/css/my.css">
     <script src="/assets/scripts/script.js" defer></script>
     <title>Consumables</title>
 </head>
 
 <body>
+
+<header id="navigation" class="p-navigation">
+    <div class="p-navigation__row">
+        <div class="p-navigation__banner">
+            <div class="p-navigation__logo">
+                <a class="p-navigation__item" href="/">
+                    <img class="p-navigation__image" src="/assets/img/consumables.svg" alt="Consumables" width="200">
+                </a>
+            </div>
+            <a href="#navigation" class="p-navigation__toggle--open" title="menu">Menu</a>
+            <a href="#navigation-closed" class="p-navigation__toggle--close" title="close menu">Close menu</a>
+        </div>
+        <nav class="p-navigation__nav" aria-label="main navigation">
+            <span class="u-off-screen">
+                <a href="/">Jump to main content</a>
+            </span>
+            <ul class="p-navigation__items">
+                <li id="navigation-home" class="p-navigation__item">
+                    <a class="p-navigation__link" href="/">home</a>
+                </li>
+                <li id="navigation-add" class="p-navigation__item">
+                    <a class="p-navigation__link" href="/add">add</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    
 {{end}}

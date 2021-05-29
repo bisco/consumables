@@ -1,0 +1,20 @@
+{{template "header" .}}
+
+<div class="row">
+    <form action="javascript:modifyItem()">
+        <input id="id" type="hidden" value="{{.item.Id}}" >
+        <label for="name">name</label>
+        <input id="name" type="text" placeholder="item name" value="{{.item.Name}}">
+        <label for="count">count</label>
+        <input id="count" type="number" placeholder="0" value="{{.item.Count}}" min="0" step="1">
+        <label for="category">category</label>
+        <input id="category" type="text" placeholder="category" value="{{.item.Category}}">
+        <label for="subcategory">subcategory</label>
+        <input id="subcategory" type="text" placeholder="subcategory" value="{{.item.SubCategory}}">
+        <div id="invalidCount"></div>
+        <button>modify</button>
+    </form>
+    <div id="modifyResult"></div>
+</div>
+
+{{template "footer"}}

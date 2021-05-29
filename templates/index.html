@@ -1,29 +1,80 @@
 {{template "header" .}}
-<div class="container">
 
-<h1>Consumables</h1>
-<hr>
-<a href="./add">add entry</a>
-<hr>
-<div id="actionResult"></div>
+
+<div class="row">
+  <aside class="p-accordion">
+    <ul class="p-accordion__list">
+      <li class="p-accordion__group">
+        <div role="heading" aria-level="3" class="p-accordion__heading">
+          <button type="button" class="p-accordion__tab" id="tab1" aria-controls="tab1-section" aria-expanded="false">filter</button>
+        </div>
+        <section class="p-accordion__panel" id="tab1-section" aria-hidden="true" aria-labelledby="tab1">
+          {{range $category, $subs := .categoryCodeMap}}
+            {{range $subcategory, $codes := $subs}}
+            <div class="p-chip" aria-pressed="true" role="button">
+              <span class="p-chip__lead">{{$category}}</span><span class="p-chip__value">{{$subcategory}}</span>
+              <button class="p-chip__dismiss" id="filter-{{$codes.CategoryCode}}-{{$codes.SubCategoryCode}}" onclick="toggleTag(this.id)"><i id="filter-{{$codes.CategoryCode}}-{{$codes.SubCategoryCode}}-state" class="p-icon--success">ON</i></button>
+            </div>
+            {{end}}
+          {{end}}
+        </section>
+      </li>
+    </ul>
+  </aside>
+</div>
+
+<!--
+<div class="row">
+  <div class="p-search-and-filter">
+  <div class="p-search-and-filter__search-container" aria-expanded="false" data-active="true" data-empty="false">
+    filter:
+    <div class="p-chip" aria-pressed="true" role="button">
+      <span class="p-chip__lead">食べ物</span><span class="p-chip__value">嗜好品</span>
+      <button class="p-chip__dismiss" id="category-food" onclick="toggleTag(this.id)"><i id="category-food-state" class="p-icon--success">ON</i></button>
+    </div>
+    <div class="p-chip" aria-pressed="true" role="button">
+      <span class="p-chip__lead">食べ物</span><span class="p-chip__value">その他</span>
+      <button class="p-chip__dismiss" id="category-food" onclick="toggleTag(this.id)"><i id="category-food-state" class="p-icon--success">ON</i></button>
+    </div>
+    <div class="p-chip" aria-pressed="true" role="button">
+      <span class="p-chip__lead">雑貨</span><span class="p-chip__value">洗剤</span>
+      <button class="p-chip__dismiss" id="category-dailyuse" onclick="toggleTag(this.id)"><i id="category-dailyuse-state" class="p-icon--success">ON</i></button>
+    </div>
+  </div>
+  </div>
+</div>
+-->
+
 {{range $idx, $item := .allItems}}
-<div class="row item-container" id="row-itemid{{$item.Id}}">
-        <div class="column">
-            <div class="">
+<div class="row filter-{{$item.CategoryCode}}-{{$item.SubCategoryCode}}-items" id="row-itemid{{$item.Id}}">
+<div class="col-12">
+    <div class="p-card">
+        <h2 class="p-card__title p-heading--5">
             <span id="itemid{{$item.Id}}-name">{{$item.Name}}</span>:
             <span id="itemid{{$item.Id}}-count">{{$item.Count}}</span>
-        </div>
-        </div>
-        <div class="column">
-            <button class="button button-outline" id="{{$item.Id}}" onclick="plusOne(this.id)">+1</button>
-            <button class="button button-outline" id="{{$item.Id}}" onclick="minusOne(this.id)">-1</button>
-            <button class="button button-outline" id="{{$item.Id}}" onclick="deleteOne(this.id)">D</button>
-        </div>
-        <div class="column align-right">
-            <small>updated: <span class="updated-at">{{$item.UpdatedAt}}</span></small>
-        </div>
+        </h2>
+        <hr class="u-sv1">  
+        <p class="p-card__content">
+            <button class="p-button has-icon is-dense" id="{{$item.Id}}" onclick="plusOne(this.id)"><i class="p-icon--plus"></i></button>
+            <button class="p-button has-icon is-dense" id="{{$item.Id}}" onclick="minusOne(this.id)"><i class="p-icon--minus"></i></button>
+            <button class="p-button has-icon is-dense" id="{{$item.Id}}" onclick="deleteOne(this.id)"><i class="p-icon--delete"></i></button> 
+            <a href="/modify/{{$item.Id}}" class="p-button has-icon is-dense"><i class="p-icon--menu"></i></a> 
+        </p>
+        <hr class="u-sv1">
+        <p class="p-card__content p-text--small">
+          <div class="p-chip">
+            <span class="p-chip__lead">{{$item.Category}}</span><span class="p-chip__value">{{$item.SubCategory}}</span>
+          </div>
+          <!--updated: <span class="updated-at">{{$item.UpdatedAt}}</span>-->
+        </p>
+    </div>
+</div>
 </div>
 
 {{end}}
-</div> <!-- class="container" -->
+</tbody>
+</table>
+</div>
+</div>
+
 {{template "footer"}}

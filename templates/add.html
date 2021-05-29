@@ -1,16 +1,15 @@
 {{template "header" .}}
 
-<h1>Consumables/add</h1>
-<hr>
-<a href="/">home</a>
-<hr>
-
-<div>
+<div class="row">
     <form action="javascript:addItem()">
         <label for="name">name</label>
-        <input id="name" type="text" placeholder="item name"></p>
+        <input id="name" type="text" placeholder="item name">
         <label for="count">count</label>
         <input id="count" type="number" placeholder="0" min="0" step="1">
+        <label for="category">category</label>
+        <input id="category" type="text" placeholder="category">
+        <label for="subcategory">subcategory</label>
+        <input id="subcategory" type="text" placeholder="subcategory">
         <div id="invalidCount"></div>
         <button>add</button>
     </form>
