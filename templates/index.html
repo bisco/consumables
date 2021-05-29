@@ -23,28 +23,6 @@
   </aside>
 </div>
 
-<!--
-<div class="row">
-  <div class="p-search-and-filter">
-  <div class="p-search-and-filter__search-container" aria-expanded="false" data-active="true" data-empty="false">
-    filter:
-    <div class="p-chip" aria-pressed="true" role="button">
-      <span class="p-chip__lead">食べ物</span><span class="p-chip__value">嗜好品</span>
-      <button class="p-chip__dismiss" id="category-food" onclick="toggleTag(this.id)"><i id="category-food-state" class="p-icon--success">ON</i></button>
-    </div>
-    <div class="p-chip" aria-pressed="true" role="button">
-      <span class="p-chip__lead">食べ物</span><span class="p-chip__value">その他</span>
-      <button class="p-chip__dismiss" id="category-food" onclick="toggleTag(this.id)"><i id="category-food-state" class="p-icon--success">ON</i></button>
-    </div>
-    <div class="p-chip" aria-pressed="true" role="button">
-      <span class="p-chip__lead">雑貨</span><span class="p-chip__value">洗剤</span>
-      <button class="p-chip__dismiss" id="category-dailyuse" onclick="toggleTag(this.id)"><i id="category-dailyuse-state" class="p-icon--success">ON</i></button>
-    </div>
-  </div>
-  </div>
-</div>
--->
-
 {{range $idx, $item := .allItems}}
 <div class="row filter-{{$item.CategoryCode}}-{{$item.SubCategoryCode}}-items" id="row-itemid{{$item.Id}}">
 <div class="col-12">

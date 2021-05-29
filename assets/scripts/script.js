@@ -179,6 +179,14 @@ function unfilter(className) {
     });
 }
 
+function unfilterAll() {
+    document.querySelectorAll(".p-chip__dismiss").forEach((t) => {
+        if(t.childNodes[0].className === "p-icon--success") {
+            t.click();
+        }
+    });    
+}
+
 function toggleTag(id) {
     const stateTag = document.querySelector("#"+id+"-state");
     let state = stateTag.classList[0];
@@ -205,6 +213,9 @@ function toggleExpanded(element, show) {
     if (target) {
       element.setAttribute('aria-expanded', show);
       target.setAttribute('aria-hidden', !show);
+      if(show) {
+        unfilterAll();
+      }
     }
   }
   
