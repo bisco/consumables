@@ -85,6 +85,8 @@ async function deleteOne(id) {
 async function addItem() {
     const name = document.querySelector("#name").value;
     const count = document.querySelector("#count").value;
+    const category = document.querySelector("#category").value;
+    const subcategory = document.querySelector("#subcategory").value;
     const result = document.querySelector("#addResult")
 
     if(name === "" || count === "") {
@@ -92,7 +94,7 @@ async function addItem() {
         return;
     }
 
-    const reqbody = {"name":name, "count":parseInt(count, 10)};
+    const reqbody = {"name":name, "count":parseInt(count, 10), "category":category, "subcategory": subcategory};
 
     console.log(reqbody)
     response = await POST("/api/v1/consumable-items", JSON.stringify(reqbody));
